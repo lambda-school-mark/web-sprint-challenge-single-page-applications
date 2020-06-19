@@ -5,15 +5,12 @@ const User = (props) => {
   return (
     <div>
       <div>{details.name}</div>
-      <div>{details.size1}</div>
-      <div>{details.size2}</div>
-      <div>{details.size3}</div>
-      <div>{details.size4}</div>
+      <div>{details.size}</div>
       <div>{details.instructions}</div>
-      <div>{details.topping1}</div>
-      <div>{details.topping2}</div>
-      <div>{details.topping3}</div>
-      <div>{details.topping4}</div>
+      <div>Pepperoni: {details.Pepperoni.toString()}</div>
+      <div>Mushrooms: {details.Mushrooms.toString()}</div>
+      <div>Chicken: {details.Chicken.toString()}</div>
+      <div>Bacon {details.Bacon.toString()}</div>
     </div>
   );
 };

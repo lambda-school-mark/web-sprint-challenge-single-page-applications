@@ -25,20 +25,12 @@ const Form = (props) => {
       <br></br>
       <label>
         Select Pizza Size:
-        <select>
-          <option>Select</option>
-          <option type="text" name="Small" id="size1" value={values.size}>
-            Small
-          </option>
-          <option type="text" name="Medium" id="size2" value={values.size}>
-            Medium
-          </option>
-          <option type="text" name="Large" id="size3" value={values.size}>
-            Large
-          </option>
-          <option type="text" name="xLarge" id="size4" value={values.size}>
-            X-Large
-          </option>
+        <select name="size" value={values.size} onChange={onInputChange}>
+          <option value="">Select</option>
+          <option value="Small">Small</option>
+          <option value="Medium">Medium</option>
+          <option value="Large">Large</option>
+          <option value="X-Large">X-Large</option>
         </select>
       </label>
       <br></br>
@@ -59,7 +51,8 @@ const Form = (props) => {
             name="Pepperoni"
             id="topping1"
             type="checkbox"
-            value={values.topping1}
+            value={values.Pepperoni}
+            checked={values.checked}
             onChange={onCheckBoxChange}
           />
           Pepperoni
@@ -70,7 +63,8 @@ const Form = (props) => {
             name="Mushrooms"
             id="topping2"
             type="checkbox"
-            value={values.topping2}
+            value={values.Mushrooms}
+            checked={values.checked}
             onChange={onCheckBoxChange}
           />
           Mushrooms
@@ -81,7 +75,8 @@ const Form = (props) => {
             name="Chicken"
             id="topping3"
             type="checkbox"
-            value={values.topping3}
+            value={values.Chicken}
+            checked={values.checked}
             onChange={onCheckBoxChange}
           />
           Grilled Chicken
@@ -92,7 +87,8 @@ const Form = (props) => {
             name="Bacon"
             id="topping4"
             type="checkbox"
-            value={values.topping4}
+            value={values.Bacon}
+            checked={values.checked}
             onChange={onCheckBoxChange}
           />
           Bacon

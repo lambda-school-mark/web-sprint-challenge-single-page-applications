@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Switch, Route, Link } from "react-router-dom";
 import * as Yup from "yup";
+import axios from "axios";
 
 import Home from "./Home";
 import Form from "./Form";
@@ -10,21 +11,28 @@ import User from "./User";
 const App = () => {
   const initialFormValues = {
     name: "",
-    size: { Small: "", Medium: "", Large: "", xLarge: "" },
+    size: "",
     instructions: "",
-    toppings: { Pepperoni: "", Mushrooms: "", Chicken: "", Bacon: "" },
+    Pepperoni: false,
+    Mushrooms: false,
+    Chicken: false,
+    Bacon: false,
   };
 
   const initialFormErrors = {
     name: "",
-    size: { Small: "", Medium: "", Large: "", xLarge: "" },
+    size: "",
     instructions: "",
-    toppings: { Pepperoni: "", Mushrooms: "", Chicken: "", Bacon: "" },
+    Pepperoni: "",
+    Mushrooms: "",
+    Chicken: "",
+    Bacon: "",
   };
 
   const initialDisabled = true;
 
-  const [users, setUsers] = useState([]);
+  const [pizzas, setPizzas] = useState([]);
+
   const [formValues, setFormValues] = useState(initialFormValues);
   const [formErrors, setFormErrors] = useState(initialFormErrors);
   const [disabled, setDisabled] = useState(initialDisabled);
@@ -57,22 +65,6 @@ const App = () => {
   const onCheckBoxChange = (event) => {
     const { name, checked } = event.target;
 
-    Yup.reach(formValidation, name)
-      .validate(checked)
-      .then(() => {
-        setFormErrors({
-          ...formErrors,
-          [name]: "",
-        });
-      })
-
-      .catch((error) => {
-        setFormErrors({
-          ...formErrors,
-          [name]: error.errors[0],
-        });
-      });
-
     setFormValues({
       ...formValues,
       [name]: checked,
@@ -89,13 +81,33 @@ const App = () => {
     event.preventDefault();
     console.log(onSubmit);
 
-    const newUser = {
+    const newPizza = {
       name: formValues.name,
       size: formValues.size,
       instructions: formValues.instructions,
-      topping: formValues.topping,
+      Pepperoni: formValues.Pepperoni,
+      Mushrooms: formValues.Mushrooms,
+      Chicken: formValues.Chicken,
+      Bacon: formValues.Bacon,
     };
-    setUsers([...users, newUser]);
+    postNewPizzas(newPizza);
+    setFormValues(initialFormValues);
+  };
+
+  const postNewPizzas = (newPizza) => {
+    axios
+      .post("https://reqres.in/api/users", newPizza)
+      .then((res) => {
+        setPizzas([res.data, ...pizzas]);
+        console.log(res.data);
+        console.log(pizzas);
+      })
+      .catch((err) => {
+        console.log("Post error:", err);
+      })
+      .finally(() => {
+        setFormValues(initialFormValues);
+      });
   };
 
   return (
@@ -120,8 +132,8 @@ const App = () => {
             onCheckBoxChange={onCheckBoxChange}
           />
           <div>
-            {users.map((user) => {
-              return <User key={user.id} details={user} />;
+            {pizzas.map((pizza) => {
+              return <User key={pizza.id} details={pizza} />;
             })}
           </div>
         </Route>
